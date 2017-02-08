@@ -1,6 +1,6 @@
 <html>
 <head>
-	<title>Covered California Map</title>
+	<title>Medi-Cal Expansion Map</title>
 	<link rel="stylesheet" href="leaflet.css" />
 	<script src="leaflet.js"></script>
 	<script src='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.js'></script>
@@ -70,14 +70,14 @@
 
 	// method to update control based on feature properties passed
 	info.update = function (props) {
-		this._div.innerHTML = '<h4>Covered California Coverage</h4>' +  (props ?
-			'<b>' + props.medi_cal_county + '</b><br />' + '% of population covered: '+ (props.medi_cal_expansion_enrollees_percent * 100).toFixed(1) + '% (' + numberWithCommas(props.medi_cal_expansion_enrollees) + ')'
+		this._div.innerHTML = '<h4>Medi-Cal Expansion Coverage</h4>' +  (props ?
+			'<b>' + props.medi_cal_county + '</b><br />' + '% of 18-64 population covered: '+ (props.medi_cal_expansion_enrollees_percent * 100).toFixed(1) + '% (' + numberWithCommas(props.medi_cal_expansion_enrollees) + ')'
 			: 'Hover over a county');
 	};
 
 	info.addTo(map);
 
-	// get color depending on percent of population enrolled in the medi-cal expansion
+	// get color depending on percent of 18-64 population enrolled in the medi-cal expansion
 	function getColor(pct) {
 		return pct >= .17 ? '#e31a1c' :
 				pct >= .14  ? '#fd8d3c' :
@@ -86,7 +86,7 @@
 							'#00FFFFFF';
 	}
 
-	// create a function that returns a color based on percent of population enrolled in the medi-cal expansion
+	// create a function that returns a color based on percent of 18-64 population enrolled in the medi-cal expansion
 	function style(feature) {
 	return {
 		weight: 2,
@@ -143,7 +143,7 @@
 		onEachFeature: onEachFeature
 	}).addTo(map);
 
-	map.attributionControl.addAttribution('Sources: <a href="http://census.gov/" target="_blank">US Census Bureau</a>, <a href="http://http://www.coveredca.com" target="_blank">Coverered California</a>');
+	map.attributionControl.addAttribution('Sources: <a href="http://census.gov/" target="_blank">US Census Bureau</a>, <a href="http://www.dhcs.ca.gov/Pages/default.aspx" target="_blank">California Department of Health Care Services</a>');
 
 	// add legend to map
 	var legend = L.control({position: 'bottomleft'});
@@ -161,7 +161,7 @@
 				'<i style="background:' + getColor(grades[i]) + '"></i>' + descriptions[i]);
 		}
 
-		div.innerHTML = "<h4>Percent of Population Covered</h4>" + labels.join('<br>');
+		div.innerHTML = "<h4>Percent of 18-64 Population Covered</h4>" + labels.join('<br>');
 		return div;
 	};
 
