@@ -35,8 +35,8 @@
 <body>
 	<div id="map"></div>
 
-	<!-- load the covered california data -->
-	<script type="text/javascript" src="data/covered_ca.geojson"></script>
+	<!-- load the medi-cal data -->
+	<script type="text/javascript" src="data/medi_cal.geojson"></script>
 
 	<script>
 		// initialize the map
@@ -71,22 +71,22 @@
 	// method to update control based on feature properties passed
 	info.update = function (props) {
 		this._div.innerHTML = '<h4>Covered California Coverage</h4>' +  (props ?
-			'<b>' + props.covered_ca_county + '</b><br />' + '% of population covered: '+ (props.covered_ca_total_enrollees_percent * 100).toFixed(1) + '% (' + numberWithCommas(props.covered_ca_total_enrollees) + ')'
+			'<b>' + props.medi_cal_county + '</b><br />' + '% of population covered: '+ (props.medi_cal_expansion_enrollees_percent * 100).toFixed(1) + '% (' + numberWithCommas(props.medi_cal_expansion_enrollees) + ')'
 			: 'Hover over a county');
 	};
 
 	info.addTo(map);
 
-	// get color depending on percent of population enrolled in covered california
+	// get color depending on percent of population enrolled in the medi-cal expansion
 	function getColor(pct) {
-		return pct >= .05 ? '#e31a1c' :
-				pct >= .04  ? '#fd8d3c' :
-				pct >= .03  ? '#fecc5c' :
-				pct >= .01  ? '#ffffb2' :
+		return pct >= .17 ? '#e31a1c' :
+				pct >= .14  ? '#fd8d3c' :
+				pct >= .11  ? '#fecc5c' :
+				pct >= .07  ? '#ffffb2' :
 							'#00FFFFFF';
 	}
 
-	// create a function that returns a color based on percent of population enrolled in covered california
+	// create a function that returns a color based on percent of population enrolled in the medi-cal expansion
 	function style(feature) {
 	return {
 		weight: 2,
@@ -94,7 +94,7 @@
 		color: 'white',
 		dashArray: '3',
 		fillOpacity: 0.7,
-		fillColor: getColor(feature.properties.covered_ca_total_enrollees_percent)
+		fillColor: getColor(feature.properties.medi_cal_expansion_enrollees_percent)
 		};
 	}
 
@@ -135,7 +135,7 @@
 		});
 	}
 
-	// add covered california layer to the map
+	// add medi-cal layer to the map
 	// style the layer
 	// add mouse listeners to the layer
 	geojson = L.geoJson(countyData, {
@@ -151,9 +151,9 @@
 	legend.onAdd = function (map) {
 
 		var div = L.DomUtil.create('div', 'info legend'),
-			grades = [.01, .03, .04, .05],
+			grades = [.07, .11, .14, .17],
 			labels = [],
-			descriptions = [">= 1%", ">= 3%", ">= 4%", ">= 5%"];
+			descriptions = [">= 7%", ">= 11%", ">= 14%", ">= 17%"];
 
 		// loop through pct intervals and generate a label with a colored square for each interval
 		for (var i = 0; i < grades.length; i++) {
