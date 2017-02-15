@@ -70,7 +70,7 @@
 	// method to update control based on feature properties passed
 	info.update = function (props) {
 		this._div.innerHTML = '<h4>Medi-Cal Expansion Coverage</h4>' +  (props ?
-			'<b>' + props.medi_cal_county + '</b><br />' + '% of 18-64 population covered: '+ (props.medi_cal_expansion_enrollees_percent * 100).toFixed(1) + '% (' + numberWithCommas(props.medi_cal_expansion_enrollees) + ')'
+			'<b>' + props.medi_cal_county + '</b><br />' + '18-64 Population: ' + props.medi_cal_18_64_pop + '<br />' + 'Percent Covered: '+ (props.medi_cal_expansion_enrollees_percent * 100).toFixed(1) + '% (' + numberWithCommas(props.medi_cal_expansion_enrollees) + ')'
 			: 'Hover over a county');
 	};
 
@@ -88,7 +88,7 @@
 	// create a function that returns a color based on percent of 18-64 population enrolled in the medi-cal expansion
 	function style(feature) {
 	return {
-		weight: 2,
+		weight: 1,
 		opacity: 1,
 		color: 'white',
 		dashArray: '3',
