@@ -41,8 +41,8 @@
 
 	<script>
 		// initialize the map
-		// set map centerpoint, initial zoom and other options
-		var map = L.map('map',{scrollWheelZoom:false}).setView([37.17, -119.45], 6);
+		// set initial map bounding box and other options
+		var map = L.map('map',{scrollWheelZoom:false}).fitBounds([[42.01, -114.13],[32.53, -124.48]]);
 
 		// add basemap tile layer
 		// set max/min zoom levels and attribution
@@ -54,9 +54,10 @@
 		id: 'mapbox.light'
 	}).addTo(map);
 
-	// control that shows county info on hover
+	// define info box variable
 	var info = L.control();
 
+	// control that shows county info on hover
 	info.onAdd = function (map) {
 		this._div = L.DomUtil.create('div', 'info');
 		this.update();
@@ -75,7 +76,10 @@
 			: 'Hover over a county');
 	};
 
+	// add info box to map unless browser is mobile
+	if (!L.Browser.mobile) {
 	info.addTo(map);
+	}
 
 	// get color depending on percent of 18-64 population enrolled in the medi-cal expansion
 	function getColor(pct) {
