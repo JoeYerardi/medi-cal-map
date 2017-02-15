@@ -63,27 +63,22 @@
 	};
 
 	// function to add thousands separator to info box data
-	function numberWithCommas(x) {
-	    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	function addCommas(nStr) {
+		nStr += '';
+		x = nStr.split('.');
+		x1 = x[0];
+		x2 = x.length > 1 ? '.' + x[1] : '';
+		var rgx = /(\d+)(\d{3})/;
+		while (rgx.test(x1)) {
+			x1 = x1.replace(rgx, '$1' + ',' + '$2');
+		}
+		return x1 + x2;
 	}
-
-	function addCommas(nStr)
-{
-	nStr += '';
-	x = nStr.split('.');
-	x1 = x[0];
-	x2 = x.length > 1 ? '.' + x[1] : '';
-	var rgx = /(\d+)(\d{3})/;
-	while (rgx.test(x1)) {
-		x1 = x1.replace(rgx, '$1' + ',' + '$2');
-	}
-	return x1 + x2;
-}
 
 	// method to update control based on feature properties passed
 	info.update = function (props) {
 		this._div.innerHTML = '<h4>Medi-Cal Expansion Coverage</h4>' +  (props ?
-			'<b>' + props.medi_cal_county + '</b><br />' + '18-64 Population: ' + addCommas(props.medi_cal_18_64_pop) + '<br />' + 'Percent Covered: '+ (props.medi_cal_expansion_enrollees_percent * 100).toFixed(1) + '% (' + numberWithCommas(props.medi_cal_expansion_enrollees) + ')'
+			'<b>' + props.medi_cal_county + '</b><br />' + '18-64 Population: ' + addCommas(props.medi_cal_18_64_pop) + '<br />' + 'Percent Covered: '+ addCommas(props.medi_cal_expansion_enrollees_percent * 100) + '% (' + numberWithCommas(props.medi_cal_expansion_enrollees) + ')'
 			: 'Hover over a county');
 	};
 
